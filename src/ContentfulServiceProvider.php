@@ -1,15 +1,6 @@
 <?php
 
-/**
- * This file is part of the contentful/laravel package.
- *
- * @copyright 2015-2019 Contentful GmbH
- * @license   MIT
- */
-
-declare(strict_types=1);
-
-namespace Contentful\Laravel;
+namespace DansMaCulotte\Contentful;
 
 use Contentful\Core\Api\IntegrationInterface;
 use Contentful\Delivery\Client;
@@ -31,13 +22,11 @@ class ContentfulServiceProvider extends ServiceProvider implements IntegrationIn
      */
     public function boot()
     {
-        $configFile = (string) \realpath(__DIR__.'/config/contentful.php');
+        $this->mergeConfigFrom(__DIR__.'/../config/contentful.php', 'contentful');
 
         $this->publishes([
-            $configFile => $this->app->make('path.config').'/contentful.php',
+            __DIR__.'/../config/contentful.php' => config_path('contentful.php'),
         ]);
-
-        $this->mergeConfigFrom($configFile, 'contentful');
     }
 
     /**
@@ -45,55 +34,54 @@ class ContentfulServiceProvider extends ServiceProvider implements IntegrationIn
      */
     public function register()
     {
-        $this->app->singleton(Client::class, function (Application $app): Client {
-            $config = $app['config']['contentful'];
+        $this->app->singleton(Client::class, function () {
+            $config = config('contentful');
 
             $options = new ClientOptions();
-            if ($config['delivery.preview']) {
+            if ($config['preview']) {
                 $options->usingPreviewApi();
             }
 
-            if ($config['delivery.defaultLocale']) {
-                $options->withDefaultLocale($config['delivery.defaultLocale']);
+            $locale = app()->getLocale();
+            if ($config['defaultLocale']) {
+                $locale = $config['defaultLocale'];
             }
-
-            if (\is_callable($config['delivery.options'])) {
-                ($config['delivery.options'])($options, $app);
-            }
+            $options->withDefaultLocale($locale);
 
             $client = new Client(
-                $config['delivery.token'],
-                $config['delivery.space'],
-                $config['delivery.environment'],
+                $config['deliveryToken'],
+                $config['space'],
+                $config['environment'],
                 $options
             );
             $client->useIntegration($this);
 
             return $client;
         });
+
+        $this->app->alias(Client::class, 'contentful');
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function provides()
-    {
-        return [Client::class];
-    }
-
-    /**
-     * {@inheritdoc}
+     * Returns the name of the current integration.
+     * This value must be the one that is sent as part of
+     * the "X-Contentful-User-Agent" header to the API.
+     *
+     * @return string
      */
     public function getIntegrationName(): string
     {
-        return 'contentful.laravel';
+        return 'laravel-contentful';
     }
 
     /**
-     * {@inheritdoc}
+     * Returns the package name of the current integration.
+     * This value must be the one defined in the "composer.json" file.
+     *
+     * @return string
      */
     public function getIntegrationPackageName(): string
     {
-        return 'contentful/laravel';
+        return 'dansmaculotte/laravel-contentful';
     }
 }

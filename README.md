@@ -1,45 +1,57 @@
-# Contentful Laravel Package
+# Laravel Contentful Package
 
-[![Packagist](https://img.shields.io/packagist/v/contentful/laravel.svg?style=for-the-badge)](https://packagist.org/packages/contentful/laravel)
-[![PHP from Packagist](https://img.shields.io/packagist/php-v/contentful/laravel.svg?style=for-the-badge)](https://packagist.org/packages/contentful/laravel)
-[![CircleCI branch](https://img.shields.io/circleci/project/github/contentful/contentful-laravel/master.svg?style=for-the-badge)](https://circleci.com/gh/contentful/contentful-laravel)
-[![Packagist](https://img.shields.io/github/license/contentful/contentful-laravel.svg?style=for-the-badge)](https://packagist.org/packages/contentful/laravel)
+[![Latest Version](https://img.shields.io/packagist/v/dansmaculotte/laravel-contentful.svg?style=flat-square)](https://packagist.org/packages/dansmaculotte/laravel-contentful)
+[![Total Downloads](https://img.shields.io/packagist/dt/dansmaculotte/laravel-contentful.svg?style=flat-square)](https://packagist.org/packages/dansmaculotte/laravel-contentful)
+[![Build Status](https://img.shields.io/travis/dansmaculotte/laravel-contentful/master.svg?style=flat-square)](https://travis-ci.org/dansmaculotte/laravel-contentful)
+[![Quality Score](https://img.shields.io/scrutinizer/g/DansMaCulotte/laravel-contentful.svg?style=flat-square)](https://scrutinizer-ci.com/g/dansmaculotte/laravel-contentful)
+[![Code Coverage](https://img.shields.io/coveralls/github/dansmaculotte/laravel-contentful.svg?style=flat-square)](https://coveralls.io/github/dansmaculotte/laravel-contentful)
 
-> This library provides an easy-to-use integration between the Laravel framework and the Contentful Delivery SDK. It requires at least PHP 7.0.
+> This library provides an easy-to-use integration between the Laravel framework and the Contentful Delivery SDK.
 
-## Setup
+## Installation
 
-Add this package to your application by using [Composer](https://getcomposer.org/) and executing the following command:
+### Requirements
 
-``` bash
-composer require contentful/laravel
+- PHP 7.2
+
+You can install the package via composer:
+
+```bash
+composer require dansmaculotte/laravel-contentful
 ```
 
-Add the service provider to the `providers` array in `config/app.php`:
+The package will automatically register itself.
 
-``` php
-'providers' => [
-    Contentful\Laravel\ContentfulServiceProvider::class,
-],
+To publish the config file to config/contentful.php run:
+
+```php
+php artisan vendor:publish --provider="DansMaCulotte\Contentful\ContentfulServiceProvider"
 ```
 
-## Configuration
+## Usage
 
-Publish the config file:
-
-``` sh
-php artisan vendor:publish --provider="Contentful\Laravel\ContentfulServiceProvider"
-```
-
-This will add `contentful.php` to your `/config` folder. Next, add your space ID and API key to your `.env` file:
-
-    CONTENTFUL_SPACE_ID="cfexampleapi"
-    CONTENTFUL_DELIVERY_TOKEN="b4c0n73n7fu1"
+Configure your contentful delivery token and space id in `config/contenful.php`.
 
 ## What is Contentful?
 
 [Contentful](https://www.contentful.com) provides a content infrastructure for digital teams to power content in websites, apps, and devices. Unlike a CMS, Contentful was built to integrate with the modern software stack. It offers a central hub for structured content, powerful management and delivery APIs, and a customizable web app that enable developers and content creators to ship digital products faster.
 
+
+
+### Testing
+
+```bash
+composer test
+```
+
+### Changelog
+
+Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
+
+## Contributing
+
+Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
+
 ## License
 
-Copyright (c) 2015-2019 Contentful GmbH. Code released under the MIT license. See [LICENSE](LICENSE) for further details.
+The MIT License (MIT). Please see [License File](LICENSE.md) for more information.

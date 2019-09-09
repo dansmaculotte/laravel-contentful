@@ -1,37 +1,21 @@
 <?php
 
-/**
- * This file is part of the contentful/laravel package.
- *
- * @copyright 2015-2019 Contentful GmbH
- * @license   MIT
- */
+namespace DansMaCulotte\Contentful\Tests;
 
-declare(strict_types=1);
-
-namespace Contentful\Tests\Laravel;
-
-use Contentful\Laravel\ContentfulServiceProvider;
-use Contentful\Laravel\Facades\ContentfulDelivery;
+use DansMaCulotte\Contentful\ContentfulServiceProvider;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 
 class TestCase extends OrchestraTestCase
 {
+
     /**
-     * {@inheritdoc}
+     * @param \Illuminate\Foundation\Application $app
+     * @return array
      */
     protected function getPackageProviders($app)
     {
-        return [ContentfulServiceProvider::class];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function getPackageAliases($app)
-    {
         return [
-            'Contentful' => ContentfulDelivery::class,
+            ContentfulServiceProvider::class
         ];
     }
 }
