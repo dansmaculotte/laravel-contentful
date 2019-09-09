@@ -1,6 +1,7 @@
 {
     "name": "dansmaculotte/laravel-contentful",
     "description": "Integrates the Contentful PHP SDK with Laravel.",
+    "version": "1.0.0",
     "type": "library",
     "license": "MIT",
     "require": {
