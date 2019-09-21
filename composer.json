@@ -35,7 +35,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "DansMaCulotte\\Contentful\\Laravel\\ContentfulServiceProvider"
+                "DansMaCulotte\\Contentful\\ContentfulServiceProvider"
             ],
             "aliases": {
                 "ContentfulDelivery": "DansMaCulotte\\Contentful\\ContentfulDeliveryFacade"
