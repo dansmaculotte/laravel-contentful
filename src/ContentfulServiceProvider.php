@@ -5,20 +5,14 @@ namespace DansMaCulotte\Contentful;
 use Contentful\Core\Api\IntegrationInterface;
 use Contentful\Delivery\Client;
 use Contentful\Delivery\ClientOptions;
+use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 
-class ContentfulServiceProvider extends ServiceProvider implements IntegrationInterface
+class ContentfulServiceProvider extends ServiceProvider implements IntegrationInterface, DeferrableProvider
 {
     /**
-     * Indicates if loading of the provider is deferred.
-     *
-     * @var bool
-     */
-    protected $defer = true;
-
-    /**
-     * Register any other events for your application.
+     * Bootstrap the application services.
      */
     public function boot()
     {
@@ -38,7 +32,7 @@ class ContentfulServiceProvider extends ServiceProvider implements IntegrationIn
             $config = config('contentful');
 
             $options = new ClientOptions();
-            if ($config['preview']) {
+            if (is_bool($config['preview']) && $config['preview']) {
                 $options->usingPreviewApi();
             }
 
@@ -83,5 +77,15 @@ class ContentfulServiceProvider extends ServiceProvider implements IntegrationIn
     public function getIntegrationPackageName(): string
     {
         return 'dansmaculotte/laravel-contentful';
+    }
+
+    /**
+     * Get the services provided by the provider.
+     *
+     * @return array
+     */
+    public function provides()
+    {
+        return [Client::class];
     }
 }

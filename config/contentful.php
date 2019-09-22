@@ -1,6 +1,5 @@
 <?php
 
-
 return [
     /*
      * The ID of the space you want to access.
@@ -20,7 +19,7 @@ return [
     /*
      * Controls whether Contentful's Delivery or Preview API is accessed.
      */
-    'preview' => (bool) env('CONTENTFUL_USE_PREVIEW', false),
+    'preview' => env('CONTENTFUL_USE_PREVIEW', false),
 
     /*
      * The default locale to use when querying the API.
