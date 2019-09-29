@@ -28,8 +28,8 @@ class ContentfulServiceProvider extends ServiceProvider implements IntegrationIn
      */
     public function register()
     {
-        $this->app->singleton(Client::class, function () {
-            $config = config('contentful');
+        $this->app->singleton(Client::class, function ($app) {
+            $config = config('contentful', []);
 
             $options = new ClientOptions();
             if (is_bool($config['preview']) && $config['preview']) {
@@ -86,6 +86,6 @@ class ContentfulServiceProvider extends ServiceProvider implements IntegrationIn
      */
     public function provides()
     {
-        return [Client::class];
+        return ['contentful'];
     }
 }
